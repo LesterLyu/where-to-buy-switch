@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const open = require('open');
 const {send} = require('./mailer');
 const {stores} = require('./stores');
 
@@ -35,6 +36,7 @@ async function checkStore(storeName, store) {
   const quantity = await getQuantity(store);
   if (quantity > 0) {
     console.error(storeName, 'has', quantity === true ? '>=1' : quantity, store.userLink)
+    open(store.userLink);
     send(`${storeName} has ${quantity} <a href="${store.userLink}">link</a>`)
   } else
     console.log(storeName, 'has 0')
