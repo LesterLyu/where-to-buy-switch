@@ -34,20 +34,21 @@ const getQuantity = async (store) => {
 async function checkStore(storeName, store) {
   const quantity = await getQuantity(store);
   if (quantity > 0) {
-	console.error(storeName, 'has', quantity === true ? '>=1' : quantity, store.userLink)
-	send(`${storeName} has ${quantity} <a href="${store.userLink}">link</a>`)
+    console.error(storeName, 'has', quantity === true ? '>=1' : quantity, store.userLink)
+    send(`${storeName} has ${quantity} <a href="${store.userLink}">link</a>`)
   } else
-	console.log(storeName, 'has 0')
+    console.log(storeName, 'has 0')
 }
 
 async function main() {
-  while(1) {
-	const promises = [];
+  while (1) {
+    const promises = [];
     for (const [storeName, store] of Object.entries(stores)) {
       promises.push(checkStore(storeName, store));
     }
-	console.log('---')
-	await Promise.all(promises);
+    console.clear();
+    console.log(Date());
+    await Promise.all(promises);
     await sleep(8000)
   }
 }
