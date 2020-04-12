@@ -2,10 +2,22 @@
 # yarn lockfile v1
 
 
+he@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
+  integrity sha1-k0EP0hsAlzUVH4howvJx80J+I/0=
+
 node-fetch@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+
+node-html-parser@^1.2.15:
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.2.15.tgz#279a126a12f6ab230a85a1edecc24deb92340f6c"
+  integrity sha512-zhNRvdoqmbUgxp37Db4og9BchxV3I05Vd5d8vEG9bg8oG1UxLraRurvne2mdFkv5obSKRoTRRW2B/l7TFud6tA==
+  dependencies:
+    he "1.1.1"
 
 nodemailer@^6.4.6:
   version "6.4.6"
