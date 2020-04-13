@@ -24,7 +24,7 @@ const getQuantity = async (store) => {
   }
   // console.log(json)
   try {
-    return store.quantity(json);
+    return store.quantities(json);
   } catch (e) {
     console.error("Failed to get data from", store.url);
     console.error(e);
@@ -33,17 +33,21 @@ const getQuantity = async (store) => {
 };
 
 async function checkStore(storeName, store) {
-  const quantity = await getQuantity(store);
-  if (quantity > 0) {
-    console.error(storeName, 'has', quantity === true ? '>=1' : quantity, store.userLink)
-    open(store.userLink);
-    send(`${storeName} has ${quantity} <a href="${store.userLink}">link</a>`)
-  } else
-    console.log(storeName, 'has 0')
+  let quantities = await getQuantity(store);
+  for (let i = 0; i < quantities.length; i++) {
+    const quantity = quantities[i];
+    if (quantity > 0) {
+      console.error(storeName, store.items[i], 'has', quantity === true ? '>=1' : quantity, store.userLinks[i]);
+      open(store.userLinks[i]);
+      send(`${storeName} ${store.items[i]} has ${quantity === true ? '>=1' : quantity} <a href="${store.userLinks[i]}">link</a>`)
+    } else
+      console.log(storeName, store.items[i], 'has 0')
+  }
 }
 
 async function main() {
   while (1) {
+    const timeWait = 3000 + Math.random() * 7 * 1000;
     const promises = [];
     for (const [storeName, store] of Object.entries(stores)) {
       promises.push(checkStore(storeName, store));
@@ -51,7 +55,8 @@ async function main() {
     console.clear();
     console.log(Date());
     await Promise.all(promises);
-    await sleep(8000)
+    console.log('Refresh after', Math.round(timeWait / 1000), 's...');
+    await sleep(timeWait)
   }
 }
 
