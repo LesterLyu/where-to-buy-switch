@@ -64,6 +64,20 @@ const stores = {
     method: 'GET',
     quantities: text => [text.includes('out of stock online') ? 0 : true],
   },
+  ebgames_grey: {
+    items: ['grey'],
+    url: 'https://www.ebgames.ca/Switch/Games/771003/nintendo-switch-with-gray-joy-con',
+    userLinks: ['https://www.ebgames.ca/Switch/Games/771003/nintendo-switch-with-gray-joy-con'],
+    method: 'GET',
+    quantities: text => [text.toLowerCase().includes('out of stock') ? 0 : true],
+  },
+  ebgames_neon: {
+    items: ['neon'],
+    url: 'https://www.ebgames.ca/Switch/Games/771002/nintendo-switch-with-neon-blue-and-neon-red-joy-con',
+    userLinks: ['https://www.ebgames.ca/Switch/Games/771002/nintendo-switch-with-neon-blue-and-neon-red-joy-con'],
+    method: 'GET',
+    quantities: text => [text.toLowerCase().includes('out of stock') ? 0 : true],
+  },
   amazon: {
     items: ['neon + grey'],
     url: 'https://www.amazon.ca/gp/offer-listing/B07WQYRLGT/ref=olp_twister_all?ie=UTF8&mv_platform_for_display=all&qid=1586758809&sr=8-1',
@@ -84,6 +98,28 @@ const stores = {
       return [0];
     }
   },
+  amazon_ac: {
+    items: ['animal crossing se'],
+    url: 'https://www.amazon.ca/gp/offer-listing/B084DDDNRP',
+    userLinks: ['https://www.amazon.ca/gp/offer-listing/B084DDDNRP/ref=dp_olp_0?ie=UTF8&condition=all&qid=1586886581&sr=8-1'],
+    method: 'GET',
+    headers: {
+      'User-Agent': userAgent
+    },
+    quantities: text => {
+      const root = parse(text);
+      const pricesText = root.querySelectorAll('span.a-size-large.a-color-price.olpOfferPrice.a-text-bold');
+      const prices = pricesText.map(priceText => parseFloat(priceText.innerHTML.match(/[0-9]*[.][0-9]*/)[0]));
+      const lowestPrice = prices.sort()[0];
+      console.log('Amazon lowest price: ', lowestPrice);
+      if (parseInt(lowestPrice) <= 410) {
+        return [true];
+      }
+      return [0];
+    }
+  }
 };
+
+delete stores.amazon_ac;
 
 module.exports = {stores};
