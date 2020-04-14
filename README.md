@@ -1,5 +1,5 @@
 # where-to-buy-switch  (Canada only)
-Scan availability of Nintendo Switch from Amazon.ca, Bestbuy, Staples, The Source, Walmart. Reveive real-time email update when in stock.
+Scan availability of Nintendo Switch from Amazon.ca, Bestbuy, Staples, The Source, Walmart, EB Games. Reveive real-time email update when in stock.
 
 ### How to use
 - Install Node.js and dependencies
