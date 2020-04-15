@@ -3,6 +3,8 @@ const open = require('open');
 const {send} = require('./mailer');
 const {stores} = require('./stores');
 
+let lastLink = '';
+
 const getQuantity = async (store) => {
   const res = await fetch(store.url,
     {
@@ -38,7 +40,12 @@ async function checkStore(storeName, store) {
     const quantity = quantities[i];
     if (quantity > 0) {
       console.error(storeName, store.items[i], 'has', quantity === true ? '>=1' : quantity, store.userLinks[i]);
-      open(store.userLinks[i]);
+
+      if (lastLink !== store.userLinks[i]) {
+        open(store.userLinks[i]);
+        lastLink = store.userLinks[i];
+      }
+
       send(`${storeName} ${store.items[i]} has ${quantity === true ? '>=1' : quantity} <a href="${store.userLinks[i]}">link</a>`)
     } else
       console.log(storeName, store.items[i], 'has 0')
@@ -65,5 +72,8 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+// periodic clean the last link
+setInterval(() => lastLink = '', 60 * 1000);
 
 main();
